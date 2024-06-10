@@ -1,15 +1,20 @@
-package com.example.buensaborback.domain;
+package com.example.buensaborback.domain.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
-public class Categoria {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_categoria;
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
+@SuperBuilder
+public class Categoria extends Base{
 
     private String denominacion;
     private Boolean es_insumo;

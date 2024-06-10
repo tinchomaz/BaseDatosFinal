@@ -14,13 +14,15 @@ import java.util.Set;
 @Getter
 @ToString
 @SuperBuilder
-public class Pais extends Base{
+public class Localidad extends Base{
 
     private String nombre;
 
-    @OneToMany(mappedBy = "pais")
-    @Builder.Default
-    private Set<Provincia> provincias = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "FK_id_provincia")
+    private Provincia provincia;
 
-    // Getters and Setters
+    @OneToMany(mappedBy = "localidad")
+    @Builder.Default
+    private Set<Domicilio> domicilios = new HashSet<>();
 }

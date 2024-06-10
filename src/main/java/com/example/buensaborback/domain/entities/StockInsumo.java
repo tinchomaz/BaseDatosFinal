@@ -1,14 +1,19 @@
-package com.example.buensaborback.domain;
+package com.example.buensaborback.domain.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 
 @Entity
-public class StockInsumo{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_stock_insumo;
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
+@SuperBuilder
+public class StockInsumo extends Base{
 
     private Integer cantidad;
     private LocalDate fecha;

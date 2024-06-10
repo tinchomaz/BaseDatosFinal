@@ -1,14 +1,17 @@
-package com.example.buensaborback.domain;
+package com.example.buensaborback.domain.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
-public class DetalleManufacturado {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_detalle_Manufacturado;
-
-    private Integer cantidad;
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
+@SuperBuilder
+public class DetalleManufacturado extends Base{
 
     @ManyToOne
     @JoinColumn(name = "FK_id_insumo")

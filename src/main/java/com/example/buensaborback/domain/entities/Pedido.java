@@ -1,15 +1,20 @@
-package com.example.buensaborback.domain;
+package com.example.buensaborback.domain.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-public class Pedido {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_pedido;
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
+@SuperBuilder
+public class Pedido extends Base{
 
     private LocalDateTime hora_estimada_finalizacion;
     private LocalDate fecha_pedido;
@@ -26,14 +31,8 @@ public class Pedido {
     @JoinColumn(name = "FK_id_empleado")
     private Empleado empleado;
 
-    @ManyToOne
-    @JoinColumn(name = "FK_id_forma_pago")
     private FormaPago formaPago;
 
-    @ManyToOne
-    @JoinColumn(name = "FK_id_tipo_envio")
     private TipoEnvio tipoEnvio;
-
-    // Getters and Setters
 }
 

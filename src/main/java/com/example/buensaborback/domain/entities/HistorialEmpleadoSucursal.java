@@ -1,18 +1,22 @@
-package com.example.buensaborback.domain;
+package com.example.buensaborback.domain.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 
 @Entity
-public class HistorialEmpleadoSucursal {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_hist_empleado_sucursal;
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
+@SuperBuilder
+public class HistorialEmpleadoSucursal extends Base{
 
     private LocalDate fecha;
 
-    @ManyToOne
     @JoinColumn(name = "fk_id_rol")
     private Rol rol;
 

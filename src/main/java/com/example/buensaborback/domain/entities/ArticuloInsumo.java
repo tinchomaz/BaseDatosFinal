@@ -1,12 +1,17 @@
-package com.example.buensaborback.domain;
+package com.example.buensaborback.domain.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
-public class ArticuloInsumo{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_insumo;
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
+@SuperBuilder
+public class ArticuloInsumo extends Articulo{
 
     private Boolean es_para_elaborar;
 

@@ -1,23 +1,34 @@
-package com.example.buensaborback.domain;
+package com.example.buensaborback.domain.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Empresa{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idEmpresa;
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
+@SuperBuilder
+public class Empresa extends Base{
 
     private String nombre;
     private String cuit;
 
-    @OneToMany(mappedBy = "empresa")
-    private Set<ImagenEmpresa> imagenes;
+    @OneToMany
+    @Builder.Default
+    private Set<ImagenEmpresa> imagenes = new HashSet<>();
 
     @OneToMany(mappedBy = "empresa")
-    private Set<Sucursal> sucursales;
+    @Builder.Default
+    private Set<Sucursal> sucursales = new HashSet<>();
 
-    // Getters and Setters
+    @OneToMany
+    @Builder.Default
+    @JoinColumn(name = "id_empresa")
+    private Set<ImagenEmpresa> imagenEmpresas = new HashSet<ImagenEmpresa>();
 }

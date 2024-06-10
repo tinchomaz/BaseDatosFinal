@@ -1,4 +1,4 @@
-package com.example.buensaborback.domain.enums;
+package com.example.buensaborback.domain.entities;
 
 public enum FormaPago {
     EFECTIVO,

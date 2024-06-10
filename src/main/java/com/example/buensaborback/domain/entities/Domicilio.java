@@ -1,19 +1,24 @@
-package com.example.buensaborback.domain;
+package com.example.buensaborback.domain.entities;
 
 
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
 @Entity
-public class Domicilio {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idDomicilio;
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
+@SuperBuilder
+public class Domicilio extends Base{
 
     private String calle;
-    private String numero;
-    private String cp;
+    private int numero;
+    private int cp;
     private Integer piso;
     private String nroDepto;
 

@@ -1,18 +1,25 @@
-package com.example.buensaborback.domain;
+package com.example.buensaborback.domain.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
+import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Sucursal {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idSucursal;
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
+@SuperBuilder
+public class Sucursal extends Base{
 
     private String nombre;
-    private String horarioApertura;
-    private String horarioCierre;
+    private LocalTime horarioApertura;
+    private LocalTime horarioCierre;
     private Boolean esCasaMatriz;
 
     @ManyToOne
@@ -23,8 +30,8 @@ public class Sucursal {
     @JoinColumn(name = "FK_id_empresa")
     private Empresa empresa;
 
-    @OneToMany(mappedBy = "sucursal")
-    private Set<ImagenSucursal> imagenes;
-
-    // Getters and Setters
+    @OneToMany
+    @Builder.Default
+    @JoinColumn(name = "id_articulo")
+    private Set<ImagenSucursal> imagenesSucursal = new HashSet<ImagenSucursal>();
 }

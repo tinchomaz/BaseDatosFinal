@@ -1,18 +1,21 @@
-package com.example.buensaborback.domain;
+package com.example.buensaborback.domain.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
-public class UnidadMedida {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_unidad_medida;
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
+@SuperBuilder
+public class UnidadMedida extends Base{
 
     private String denominacion;
-
-    // Getters and Setters
 }
 

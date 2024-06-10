@@ -1,14 +1,18 @@
-package com.example.buensaborback.domain;
+package com.example.buensaborback.domain.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
-public class TelefonoCliente {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_telefono_cliente;
-
-    private String numero;
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
+@SuperBuilder
+public class TelefonoCliente extends Base{
+    private int numero;
 
     @ManyToOne
     @JoinColumn(name = "FK_id_cliente")

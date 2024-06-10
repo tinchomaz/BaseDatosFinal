@@ -1,12 +1,17 @@
-package com.example.buensaborback.domain;
+package com.example.buensaborback.domain.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
-public class SubCategoria{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_subcategoria;
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
+@SuperBuilder
+public class SubCategoria extends Base{
 
     @ManyToOne
     @JoinColumn(name = "FK_categoria_padre")

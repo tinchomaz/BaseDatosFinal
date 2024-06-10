@@ -1,20 +1,19 @@
-package com.example.buensaborback.domain;
+package com.example.buensaborback.domain.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 
 @Entity
-public class ImagenEmpresa {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idImagenEmpresa;
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
+@SuperBuilder
+public class ImagenEmpresa extends Base{
 
     private String nombre;
     private String url;
-
-    @ManyToOne
-    @JoinColumn(name = "FK_id_empresa")
-    private Empresa empresa;
-
-    // Getters and Setters
 }

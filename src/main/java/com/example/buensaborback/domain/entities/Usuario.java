@@ -1,19 +1,21 @@
-package com.example.buensaborback.domain;
+package com.example.buensaborback.domain.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
-public class Usuario {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_usuario;
-
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
+@SuperBuilder
+public class Usuario extends Base{
     private String auth0id;
     private String username;
     private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "FK_id_rol")
     private Rol rol;
 
     // Getters and Setters
