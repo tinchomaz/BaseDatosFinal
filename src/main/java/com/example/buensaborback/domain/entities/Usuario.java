@@ -16,6 +16,8 @@ public class Usuario extends Base{
     private String username;
     private String email;
 
+    @ManyToOne
+    @JoinColumn(name = "fk_id_rol")
     private Rol rol;
 
     // Getters and Setters

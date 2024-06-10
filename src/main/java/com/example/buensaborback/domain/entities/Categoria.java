@@ -17,8 +17,8 @@ import lombok.experimental.SuperBuilder;
 public class Categoria extends Base{
 
     private String denominacion;
-    private Boolean es_insumo;
 
-    // Getters and Setters
+    @Builder.Default
+    private boolean es_insumo = false;
 }
 

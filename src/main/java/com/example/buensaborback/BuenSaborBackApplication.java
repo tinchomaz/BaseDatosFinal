@@ -57,6 +57,8 @@ public class BuenSaborBackApplication {
 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
+	@Autowired
+	private SubCategoriaRepository subCategoriaRepository;
 
 	@Autowired
 	private ArticuloInsumoRepository articuloInsumoRepository;
@@ -69,6 +71,8 @@ public class BuenSaborBackApplication {
 	@Autowired
 	private EmpleadoRepository empleadoRepository;
 	@Autowired
+	private HistorialEmpleadoSucursalRepository historialEmpleadoSucursalRepository;
+	@Autowired
 	private TelefonoEmpleadoRepository telefonoEmpleadoRepository;
 	@Autowired
 	private PromocionRepository promocionRepository;
@@ -78,6 +82,18 @@ public class BuenSaborBackApplication {
 	private DetalleManufacturadoRepository detalleManufacturadoRepository;
 	@Autowired
 	private PedidoRepository pedidoRepository;
+	@Autowired
+	private RolRepository rolRepository;
+	@Autowired
+	private EstadoRepository estadoRepository;
+	@Autowired
+	private TipoEnvioRepository tipoEnvioRepository;
+	@Autowired
+	private FormaPagoRepository formaPagoRepository;
+	@Autowired
+	private StockInsumoRepository stockInsumoRepository;
+	@Autowired
+	private SucursalManufacturadoRepository sucursalManufacturadoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BuenSaborBackApplication.class, args);
@@ -99,6 +115,7 @@ public class BuenSaborBackApplication {
 						   DomicilioRepository domicilioRepository,
 						   UnidadMedidaRepository unidadMedidaRepository,
 						   CategoriaRepository categoriaRepository,
+						   SubCategoriaRepository subCategoriaRepository,
 						   ArticuloInsumoRepository articuloInsumoRepository,
 						   ArticuloManufacturadoRepository articuloManufacturadoRepository,
 						   ImagenArticuloRepository imagenArticuloRepository,
@@ -110,7 +127,14 @@ public class BuenSaborBackApplication {
 						   DetallePedidoRepository detallePedidoRepository,
 						   PedidoEstadoRepository pedidoEstadoRepository,
 						   TelefonoClienteRepository telefonoClienteRepository,
-						   TelefonoEmpleadoRepository telefonoEmpleadoRepository) {
+						   TelefonoEmpleadoRepository telefonoEmpleadoRepository,
+						   RolRepository rolRepository,
+						   EstadoRepository estadoRepository,
+						   TipoEnvioRepository tipoEnvioRepository,
+						   FormaPagoRepository formaPagoRepository,
+						   StockInsumoRepository stockInsumoRepository,
+						   SucursalManufacturadoRepository sucursalManufacturadoRepository,
+						   HistorialEmpleadoSucursalRepository historialEmpleadoSucursalRepository) {
 		return args -> {
 			logger.info("----------------ESTOY----FUNCIONANDO---------------------");
 			// Etapa del dashboard
@@ -185,11 +209,22 @@ public class BuenSaborBackApplication {
 			Categoria categoriaBebidas = Categoria.builder().denominacion("Bebidas").es_insumo(true).build();
 			categoriaRepository.save(categoriaBebidas);
 
-			//Categoria categoriaGaseosas = Categoria.builder().denominacion("Gaseosas").categoriaPadre(categoriaBebidas).esInsumo(true).build();
-			//categoriaRepository.save(categoriaGaseosas);
+			Categoria categoriaGaseosas = Categoria.builder().denominacion("Gaseosas").es_insumo(true).build();
+			categoriaRepository.save(categoriaGaseosas);
 
-			//Categoria categoriaTragos = Categoria.builder().denominacion("Tragos").categoriaPadre(categoriaBebidas).esInsumo(true).build();
-			//categoriaRepository.save(categoriaTragos);
+			Categoria categoriaTragos = Categoria.builder().denominacion("Tragos").es_insumo(true).build();
+			categoriaRepository.save(categoriaTragos);
+
+			SubCategoria subCategoria1 = SubCategoria.builder()
+					.categoriaPadre(categoriaBebidas)
+					.categoriaHija(categoriaGaseosas)
+					.build();
+			SubCategoria subCategoria2 = SubCategoria.builder()
+					.categoriaPadre(categoriaBebidas)
+					.categoriaHija(categoriaTragos)
+					.build();
+			subCategoriaRepository.save(subCategoria1);
+			subCategoriaRepository.save(subCategoria2);
 
 			Categoria categoriaPizzas = Categoria.builder().denominacion("Pizzas").es_insumo(false).build();
 
@@ -231,23 +266,23 @@ public class BuenSaborBackApplication {
 
 			ArticuloInsumo cocaCola = ArticuloInsumo.builder()
 					.denominacion("Coca Cola 2.5L")
-					.costo(480.0)
 					.es_para_elaborar(false)
 					.unidadMedida(unidadMedidaLitros)
+					.categoria(categoriaGaseosas)
 					.build();
 			articuloInsumoRepository.save(cocaCola);
 
 			ArticuloInsumo pepsi = ArticuloInsumo.builder()
 					.denominacion("Pepsi 2.5L")
-					.costo(450.0)
 					.es_para_elaborar(false)
 					.unidadMedida(unidadMedidaLitros)
+					.categoria(categoriaGaseosas)
 					.build();
 			articuloInsumoRepository.save(pepsi);
 
 			ArticuloInsumo harina = ArticuloInsumo.builder()
+					.codigo("I123")
 					.denominacion("Harina 000")
-					.costo(90.0)
 					.es_para_elaborar(true)
 					.categoria(categoriaInsumos)
 					.unidadMedida(unidadMedidaKilos)
@@ -255,8 +290,8 @@ public class BuenSaborBackApplication {
 			articuloInsumoRepository.save(harina);
 
 			ArticuloInsumo jamon = ArticuloInsumo.builder()
+					.codigo("I124")
 					.denominacion("Jamon Crudo")
-					.costo(900.0)
 					.es_para_elaborar(true)
 					.categoria(categoriaInsumos)
 					.unidadMedida(unidadMedidaKilos)
@@ -264,8 +299,8 @@ public class BuenSaborBackApplication {
 			articuloInsumoRepository.save(jamon);
 
 			ArticuloInsumo morrones = ArticuloInsumo.builder()
+					.codigo("I125")
 					.denominacion("Morrones 1Kg")
-					.costo(1100.0)
 					.es_para_elaborar(true)
 					.categoria(categoriaInsumos)
 					.unidadMedida(unidadMedidaKilos)
@@ -273,33 +308,27 @@ public class BuenSaborBackApplication {
 			articuloInsumoRepository.save(morrones);
 
 			ArticuloInsumo cerveza = ArticuloInsumo.builder()
+					.codigo("I126")
 					.denominacion("Cerveza Andes 473ml")
-					.costo(600.0)
 					.es_para_elaborar(false)
 					.unidadMedida(unidadMedidaLitros)
+					.categoria(categoriaTragos)
 					.build();
 			articuloInsumoRepository.save(cerveza);
 
 			ArticuloInsumo fernet = ArticuloInsumo.builder()
+					.codigo("I127")
 					.denominacion("Fernet Branca 750ml")
-					.costo(2500.0)
-					//.stockActual(300.0)
-					//.stockMinimo(50.0)
-					//.esInsumo(true)
 					.es_para_elaborar(false)
-					//.categoria(categoriaTragos)
 					.unidadMedida(unidadMedidaLitros)
+					.categoria(categoriaTragos)
 					.build();
 			articuloInsumoRepository.save(fernet);
 
 			ArticuloInsumo menta = ArticuloInsumo.builder()
 					.denominacion("Menta con Hielo")
-					.costo(2000.0)
-					//.stockActual(100.0)
-					//.stockMinimo(50.0)
-					//.esInsumo(true)
 					.es_para_elaborar(true)
-					//.categoria(categoriaTragos)
+					.categoria(categoriaInsumos)
 					.unidadMedida(unidadMedidaLitros)
 					.build();
 			articuloInsumoRepository.save(menta);
@@ -307,25 +336,134 @@ public class BuenSaborBackApplication {
 			logger.info("---------------Asocio sucursalinsumo y sucursal--------------------");
 
 			// Asigno insumos a las sucursales
-			SucursalInsumo sucursalGuaymallenInsumo = SucursalInsumo.builder().sucursal(sucursalGuaymallen).build();
-			sucursalGuaymallenInsumo.setInsumo(cocaCola);
-			sucursalGuaymallenInsumo.setInsumo(pepsi);
-			sucursalGuaymallenInsumo.setInsumo(harina);
-			sucursalGuaymallenInsumo.setInsumo(jamon);
-			sucursalGuaymallenInsumo.setInsumo(morrones);
-			sucursalGuaymallenInsumo.setInsumo(cerveza);
-			sucursalGuaymallenInsumo.setInsumo(fernet);
-			sucursalGuaymallenInsumo.setInsumo(menta);
-			// Grabo insumos de la sucursal
-			sucursalInsumoRepository.save(sucursalGuaymallenInsumo);
+			SucursalInsumo sucursalGuaymallenInsumoCoca = SucursalInsumo.builder()
+					.sucursal(sucursalGuaymallen)
+					.stock_minimo(10)
+					.stock_maximo(100)
+					.build();
+			sucursalGuaymallenInsumoCoca.setInsumo(cocaCola);
+			sucursalInsumoRepository.save(sucursalGuaymallenInsumoCoca);
 
+			SucursalInsumo sucursalGuaymallenInsumoPepsi = SucursalInsumo.builder()
+					.stock_minimo(5)
+					.stock_maximo(50)
+					.sucursal(sucursalGuaymallen)
+					.build();
+			sucursalGuaymallenInsumoPepsi.setInsumo(pepsi);
+			sucursalInsumoRepository.save(sucursalGuaymallenInsumoPepsi);
 
-			logger.info("---------------agregue insumos a sucursales--------------------");
+			SucursalInsumo sucursalGuaymallenInsumoHarina = SucursalInsumo.builder()
+					.stock_minimo(10)
+					.stock_maximo(100)
+					.sucursal(sucursalGuaymallen)
+					.build();
+			sucursalGuaymallenInsumoHarina.setInsumo(harina);
+			sucursalInsumoRepository.save(sucursalGuaymallenInsumoHarina);
+
+			SucursalInsumo sucursalGuaymallenInsumoJamon = SucursalInsumo.builder()
+					.stock_minimo(102)
+					.stock_maximo(1002)
+					.sucursal(sucursalGuaymallen)
+					.build();
+			sucursalGuaymallenInsumoJamon.setInsumo(jamon);
+			sucursalInsumoRepository.save(sucursalGuaymallenInsumoJamon);
+
+			SucursalInsumo sucursalGuaymallenInsumoMorrones = SucursalInsumo.builder()
+					.stock_minimo(10)
+					.stock_maximo(100)
+					.sucursal(sucursalGuaymallen)
+					.build();
+			sucursalGuaymallenInsumoMorrones.setInsumo(morrones);
+			sucursalInsumoRepository.save(sucursalGuaymallenInsumoMorrones);
+
+			SucursalInsumo sucursalGuaymallenInsumoCerveza = SucursalInsumo.builder()
+					.stock_minimo(10)
+					.stock_maximo(100)
+					.sucursal(sucursalGuaymallen)
+					.build();
+			sucursalGuaymallenInsumoCerveza.setInsumo(cerveza);
+			sucursalInsumoRepository.save(sucursalGuaymallenInsumoCerveza);
+
+			SucursalInsumo sucursalGuaymallenInsumoFernet = SucursalInsumo.builder()
+					.stock_minimo(10)
+					.stock_maximo(100)
+					.sucursal(sucursalGuaymallen)
+					.build();
+			sucursalGuaymallenInsumoFernet.setInsumo(fernet);
+			sucursalInsumoRepository.save(sucursalGuaymallenInsumoFernet);
+
+			SucursalInsumo sucursalGuaymallenInsumoMenta = SucursalInsumo.builder()
+					.stock_minimo(10)
+					.stock_maximo(100)
+					.sucursal(sucursalGuaymallen)
+					.build();
+			sucursalGuaymallenInsumoMenta.setInsumo(menta);
+			sucursalInsumoRepository.save(sucursalGuaymallenInsumoMenta);
+
+			logger.info("---------------agregue stock insumos--------------------");
+
+			StockInsumo stockInsumoCoca = StockInsumo.builder()
+					.cantidad(100)
+					.fecha(LocalDate.now())
+					.sucursalInsumo(sucursalGuaymallenInsumoCoca)
+					.build();
+			stockInsumoRepository.save(stockInsumoCoca);
+
+			StockInsumo stockInsumoPepsi = StockInsumo.builder()
+					.cantidad(50)
+					.fecha(LocalDate.now())
+					.sucursalInsumo(sucursalGuaymallenInsumoPepsi)
+					.build();
+			stockInsumoRepository.save(stockInsumoPepsi);
+
+			StockInsumo stockInsumoHarina = StockInsumo.builder()
+					.cantidad(100)
+					.fecha(LocalDate.now())
+					.sucursalInsumo(sucursalGuaymallenInsumoHarina)
+					.build();
+			stockInsumoRepository.save(stockInsumoHarina);
+
+			StockInsumo stockInsumoJamon = StockInsumo.builder()
+					.cantidad(502)
+					.fecha(LocalDate.now())
+					.sucursalInsumo(sucursalGuaymallenInsumoJamon)
+					.build();
+			stockInsumoRepository.save(stockInsumoJamon);
+
+			StockInsumo stockInsumoMorrones = StockInsumo.builder()
+					.cantidad(100)
+					.fecha(LocalDate.now())
+					.sucursalInsumo(sucursalGuaymallenInsumoMorrones)
+					.build();
+			stockInsumoRepository.save(stockInsumoMorrones);
+
+			StockInsumo stockInsumoCerveza = StockInsumo.builder()
+					.cantidad(100)
+					.fecha(LocalDate.now())
+					.sucursalInsumo(sucursalGuaymallenInsumoCerveza)
+					.build();
+			stockInsumoRepository.save(stockInsumoCerveza);
+
+			StockInsumo stockInsumoFernet = StockInsumo.builder()
+					.cantidad(90)
+					.fecha(LocalDate.now())
+					.sucursalInsumo(sucursalGuaymallenInsumoFernet)
+					.build();
+			stockInsumoRepository.save(stockInsumoFernet);
+
+			StockInsumo stockInsumoMenta = StockInsumo.builder()
+					.cantidad(100)
+					.fecha(LocalDate.now())
+					.sucursalInsumo(sucursalGuaymallenInsumoMenta)
+					.build();
+			stockInsumoRepository.save(stockInsumoMenta);
+
+			logger.info("---------------agregue manufacturados a sucursales--------------------");
 
 			// Crear productos manufacturados
 			ArticuloManufacturado pizzaNapolitana = ArticuloManufacturado.builder()
 					.denominacion("Pizza Napolitana")
-					//.precioVenta(1200.0)
+					.unidadMedida(unidadMedidaUnidad)
 					.descripcion("pizza rica de queso")
 					.preparacion("muzzarela en el horno 10 min")
 					.tiempo_estimado_preparacion("20 minutos")
@@ -334,7 +472,7 @@ public class BuenSaborBackApplication {
 
 			ArticuloManufacturado hamburguesa = ArticuloManufacturado.builder()
 					.denominacion("Hamburguesa completa")
-					//.precioVenta(1200.0)
+					.unidadMedida(unidadMedidaUnidad)
 					.descripcion("Hamburguesa con queso")
 					.preparacion("a la parrilla con condimentos")
 					.tiempo_estimado_preparacion("10 minutos")
@@ -360,14 +498,53 @@ public class BuenSaborBackApplication {
 					.build();
 			detalleManufacturadoRepository.save(detalleHamburguesa);
 
-			logger.info("---------------se crearon productos manufacturados y sus detalles--------------------");
+			logger.info("---------------agregue manufacturados a sucursales--------------------");
+
+			SucursalManufacturado sucursalGuaymallenManufacturadoPizzaNapolitana = SucursalManufacturado.builder()
+					.manufacturado(pizzaNapolitana)
+					.sucursal(sucursalGuaymallen)
+					.build();
+			sucursalManufacturadoRepository.save(sucursalGuaymallenManufacturadoPizzaNapolitana);
+
+			SucursalManufacturado sucursalGuaymallenManufacturadoHamburguesa = SucursalManufacturado.builder()
+					.manufacturado(hamburguesa)
+					.sucursal(sucursalGuaymallen)
+					.build();
+			sucursalManufacturadoRepository.save(sucursalGuaymallenManufacturadoHamburguesa);
+
+
+			logger.info("----------------------creando Roles----------------------------------");
+			Rol admin = Rol.builder()
+					.nombre("ADMIN")
+					.build();
+			rolRepository.save(admin);
+
+			Rol clienteUsuario = Rol.builder()
+					.nombre("CLIENTE")
+					.build();
+			rolRepository.save(clienteUsuario);
+
+			Rol cocinero = Rol.builder()
+					.nombre("COCINERO")
+					.build();
+			rolRepository.save(cocinero);
+
+			Rol cajero = Rol.builder()
+					.nombre("CAJERO")
+					.build();
+			rolRepository.save(cajero);
+
+			Rol delivery = Rol.builder()
+					.nombre("DELIVERY")
+					.build();
+			rolRepository.save(delivery);
 
 			logger.info("----------------------creando clientes----------------------------------");
 			Usuario usuario = Usuario.builder()
 					.auth0id("auth0id")
 					.username("NombreUsuario")
 					.email("correo@example.com")
-					.rol(Rol.CLIENTE)
+					.rol(clienteUsuario)
 					.build();
 
 			usuarioRepository.save(usuario); // Guardar el usuario en la base de datos
@@ -403,19 +580,20 @@ public class BuenSaborBackApplication {
 					.cliente(cliente)
 					.build();
 			telefonoClienteRepository.save(telefonoCliente);
+
 			logger.info("----------------------creando Empleado----------------------------------");
 
 			Usuario usuarioEmpleado1 = Usuario.builder()
 					.auth0id("auth0idEmpleado1")
 					.username("empleado1")
 					.email("empleado1@example.com")
-					.rol(Rol.CAJERO) // Asignar el rol de empleado al usuario 1
+					.rol(cajero) // Asignar el rol de empleado al usuario 1
 					.build();
 			Usuario usuarioEmpleado2 = Usuario.builder()
 					.auth0id("auth0idEmpleado2")
 					.username("empleado2")
 					.email("empleado2@example.com")
-					.rol(Rol.COCINERO)
+					.rol(cocinero)
 					.build();
 			usuarioRepository.save(usuarioEmpleado1);
 			usuarioRepository.save(usuarioEmpleado2);
@@ -446,6 +624,26 @@ public class BuenSaborBackApplication {
 					.empleado(empleado2)
 					.build();
 			telefonoEmpleadoRepository.save(telefonoEmpleado2);
+
+			logger.info("----------------------creando Empleado Historial Sucursal----------------------------------");
+
+
+            HistorialEmpleadoSucursal empleadoHistorialSucursal1 = HistorialEmpleadoSucursal.builder()
+					.fecha(LocalDate.now())
+					.empleado(empleado1)
+					.rol(cocinero)
+					.sucursal(sucursalMarDelPlata)
+					.build();
+            historialEmpleadoSucursalRepository.save(empleadoHistorialSucursal1);
+
+			HistorialEmpleadoSucursal empleadoHistorialSucursal2 = HistorialEmpleadoSucursal.builder()
+					.fecha(LocalDate.now())
+					.empleado(empleado2)
+					.rol(cajero)
+					.sucursal(sucursalGuaymallen)
+					.build();
+			historialEmpleadoSucursalRepository.save(empleadoHistorialSucursal2);
+
 			logger.info("----------------------creando Promocion----------------------------------");
 
 			Promocion promocionDescuentoBebidas = Promocion.builder()
@@ -472,6 +670,58 @@ public class BuenSaborBackApplication {
 					.build();
 			detallePromocionRepository.save(detallePromocionArticulo);
 
+			logger.info("----------------------creando Estados Pedidos----------------------------------");
+
+			Estado preparacion = Estado.builder()
+					.nombre("PREPARACION")
+					.build();
+			estadoRepository.save(preparacion);
+
+			Estado pendiente = Estado.builder()
+					.nombre("PENDIENTE")
+					.build();
+			estadoRepository.save(pendiente);
+
+			Estado cancelado = Estado.builder()
+					.nombre("CANCELADO")
+					.build();
+			estadoRepository.save(cancelado);
+
+			Estado rechazado = Estado.builder()
+					.nombre("RECHAZADO")
+					.build();
+			estadoRepository.save(rechazado);
+
+			Estado entregado = Estado.builder()
+					.nombre("ENTREGADO")
+					.build();
+			estadoRepository.save(entregado);
+
+			logger.info("----------------------creando Tipo Envios----------------------------------");
+
+
+			TipoEnvio deliveryEnvio = TipoEnvio.builder()
+					.nombre("DELIVERY")
+					.build();
+			tipoEnvioRepository.save(deliveryEnvio);
+
+			TipoEnvio takeAway = TipoEnvio.builder()
+					.nombre("TAKE_AWAY")
+					.build();
+			tipoEnvioRepository.save(takeAway);
+
+			logger.info("----------------------creando Formas de Pago----------------------------------");
+
+			FormaPago efectivo = FormaPago.builder()
+					.nombre("EFECTIVO")
+					.build();
+			formaPagoRepository.save(efectivo);
+
+			FormaPago mercadoPago = FormaPago.builder()
+					.nombre("MERCADO PAGO")
+					.build();
+			formaPagoRepository.save(mercadoPago);
+
 			logger.info("----------------------creando Pedido----------------------------------");
 			Pedido pedido = Pedido.builder()
 					.hora_estimada_finalizacion(LocalDateTime.now().plusHours(1))
@@ -479,8 +729,8 @@ public class BuenSaborBackApplication {
 					.clienteDomicilio(clienteDomicilio)
 					.sucursal(sucursalGuaymallen)
 					.empleado(empleado1)
-					.formaPago(FormaPago.EFECTIVO)
-					.tipoEnvio(TipoEnvio.DELIVERY)
+					.formaPago(mercadoPago)
+					.tipoEnvio(deliveryEnvio)
 					.build();
 			pedidoRepository.save(pedido);
 
@@ -501,7 +751,7 @@ public class BuenSaborBackApplication {
 			PedidoEstado estadoInicial = PedidoEstado.builder()
 					.fecha_hora(LocalDateTime.now())
 					.pedido(pedido)
-					.estado(Estado.PENDIENTE)
+					.estado(entregado)
 					.build();
 			pedidoEstadoRepository.save(estadoInicial);
 		};

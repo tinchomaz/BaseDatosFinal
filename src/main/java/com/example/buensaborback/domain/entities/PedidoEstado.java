@@ -18,9 +18,11 @@ public class PedidoEstado extends Base{
     private LocalDateTime fecha_hora;
 
     @ManyToOne
-    @JoinColumn(name = "FK_id_pedido")
+    @JoinColumn(name = "fk_id_pedido")
     private Pedido pedido;
 
+    @ManyToOne
+    @JoinColumn(name ="fk_id_estado")
     private Estado estado;
 }
 

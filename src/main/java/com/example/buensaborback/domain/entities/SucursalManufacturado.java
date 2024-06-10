@@ -13,7 +13,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class SucursalManufacturado extends Base{
 
-    private Boolean habilitado;
+    @Builder.Default
+    private boolean habilitado = true;
 
     @ManyToOne
     @JoinColumn(name = "FK_id_manufacturado")

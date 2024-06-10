@@ -15,7 +15,9 @@ public class SucursalInsumo extends Base{
 
     private Integer stock_minimo;
     private Integer stock_maximo;
-    private Boolean habilitado;
+
+    @Builder.Default
+    private boolean habilitado = true;
 
     @ManyToOne
     @JoinColumn(name = "FK_id_sucursal")

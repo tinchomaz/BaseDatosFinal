@@ -14,11 +14,11 @@ import java.util.Set;
 @Getter
 @ToString
 @SuperBuilder
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Articulo extends Base{
 
     private String denominacion;
     private String codigo;
-    private double costo;
 
     @ManyToOne
     @JoinColumn(name = "FK_id_categoria")

@@ -1,6 +1,16 @@
 package com.example.buensaborback.domain.entities;
 
-public enum FormaPago {
-    EFECTIVO,
-    MERCADO_PAGO
+import jakarta.persistence.Entity;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
+@SuperBuilder
+public class FormaPago extends Base{
+    private String nombre;
 }

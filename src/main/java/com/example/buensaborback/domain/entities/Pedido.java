@@ -31,8 +31,12 @@ public class Pedido extends Base{
     @JoinColumn(name = "FK_id_empleado")
     private Empleado empleado;
 
+    @ManyToOne
+    @JoinColumn(name = "FK_id_FormaPago")
     private FormaPago formaPago;
 
+    @ManyToOne
+    @JoinColumn(name = "FK_id_TipoEnvio")
     private TipoEnvio tipoEnvio;
 }
 

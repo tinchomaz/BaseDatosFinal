@@ -15,7 +15,8 @@ import java.time.LocalDate;
 @SuperBuilder
 public class PromocionSucursal extends Base{
 
-    private Boolean habilitado;
+    @Builder.Default
+    private boolean habilitado = true;
     private LocalDate fecha_desde;
     private LocalDate fecha_hasta;
     private String hora_desde;

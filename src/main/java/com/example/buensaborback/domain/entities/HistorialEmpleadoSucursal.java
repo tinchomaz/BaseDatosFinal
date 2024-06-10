@@ -17,6 +17,7 @@ public class HistorialEmpleadoSucursal extends Base{
 
     private LocalDate fecha;
 
+    @ManyToOne
     @JoinColumn(name = "fk_id_rol")
     private Rol rol;
 

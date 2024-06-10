@@ -23,10 +23,5 @@ public class ArticuloInsumo extends Articulo{
     @JoinColumn(name = "FK_id_unidad_medida")
     private UnidadMedida unidadMedida;
 
-    @ManyToOne
-    @JoinColumn(name = "FK_id_articulo")
-    private Articulo articulo;
-
-    // Getters and Setters
 }
 
