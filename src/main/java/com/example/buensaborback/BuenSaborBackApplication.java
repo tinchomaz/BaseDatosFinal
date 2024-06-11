@@ -95,7 +95,7 @@ public class BuenSaborBackApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BuenSaborBackApplication.class, args);
-		logger.info("Estoy activo en el main Alberto");
+		logger.info("Estoy activo en el main Base de Datos");
 	}
 
 	@Bean
