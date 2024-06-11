@@ -15,4 +15,37 @@ import java.util.List;
 
 @NoRepositoryBean
 public interface BaseRepository <E extends Base, ID extends Serializable> extends JpaRepository<E, ID> {
+    Logger logger = LoggerFactory.getLogger(BaseRepository.class);
+
+    @Override
+    @Transactional
+    default void delete(E entity) {
+        //logger.info("EJECUTANDO DELETE SOBREESCRITO");
+        entity.setEliminado(true);
+        save(entity);
+    }
+
+    @Override
+    default E getById(ID id){
+        //logger.info("EJECUTANDO GEY BY ID SOBREESCRITO");
+        var optionalEntity = findById(id);
+
+        if (optionalEntity.isEmpty()){
+            String errMsg = "Entidad no encontrada { id: " + id + " }";
+            //logger.error(errMsg);
+            throw new RuntimeException(errMsg);
+        }
+
+        var entity = optionalEntity.get();
+        /*if(entity.isBaja()){
+            String errMsg = "La entidad del tipo " + entity.getClass().getSimpleName() + " con el id " + id + " se encuentra borrada logicamente";
+            //logger.error(errMsg);
+            throw new RuntimeException(errMsg);
+        }*/
+        return entity;
+    }
+
+    Page<E> findAllByEliminadoFalse(Pageable pageable);
+
+    List<E> findAllByEliminadoFalse();
 }

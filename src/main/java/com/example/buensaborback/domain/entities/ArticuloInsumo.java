@@ -13,7 +13,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class ArticuloInsumo extends Articulo{
 
-    private Boolean es_para_elaborar;
+    @Builder.Default
+    private boolean es_para_elaborar = false;
 
     @ManyToOne
     @JoinColumn(name = "FK_id_unidad_medida")

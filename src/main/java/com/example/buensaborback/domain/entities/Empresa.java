@@ -1,5 +1,6 @@
 package com.example.buensaborback.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -21,6 +22,7 @@ public class Empresa extends Base{
 
     @OneToMany(mappedBy = "empresa")
     @Builder.Default
+    @JsonIgnore
     private Set<Sucursal> sucursales = new HashSet<>();
 
     @OneToMany

@@ -1,5 +1,6 @@
 package com.example.buensaborback.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -28,6 +29,7 @@ public class Sucursal extends Base{
 
     @ManyToOne
     @JoinColumn(name = "FK_id_empresa")
+    @JsonIgnore
     private Empresa empresa;
 
     @OneToMany
