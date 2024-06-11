@@ -15,7 +15,7 @@ public class EmpresaController{
     @Autowired
     private EmpresaService empresaService;
 
-    @GetMapping("/all")
+    @GetMapping("")
     public ResponseEntity<List<Empresa>> getAll() {
         return ResponseEntity.ok().body(empresaService.getAll());
     }
