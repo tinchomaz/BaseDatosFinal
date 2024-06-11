@@ -716,6 +716,47 @@ public class BuenSaborBackApplication {
 					.build();
 			telefonoClienteRepository.save(telefonoCliente);
 
+			Usuario usuario2 = Usuario.builder()
+					.auth0id("auth0id")
+					.username("Falsin")
+					.email("falso@egmail.com")
+					.rol(clienteUsuario)
+					.build();
+
+			usuarioRepository.save(usuario2); // Guardar el usuario en la base de datos
+
+			Cliente cliente2 = Cliente.builder()
+					.nombre("Caro")
+					.apellido("Solsona")
+					.fecha_nac(LocalDate.now()) // Supongamos que la fecha de nacimiento es la fecha actual
+					.usuario(usuario2) // Asignar el usuario correspondiente
+					.build();
+
+			clienteRepository.save(cliente2); // Guardar el cliente en la base de datos
+
+			Domicilio domicilio2 = Domicilio.builder()
+					.calle("Berutti")
+					.numero(2867)
+					.cp(5519)
+					.piso(0)
+					.nroDepto("5")
+					.localidad(localidad1)
+					.build();
+			domicilioRepository.save(domicilio2);
+
+			ClienteDomicilio clienteDomicilio2 = ClienteDomicilio.builder()
+					.cliente(cliente2)
+					.domicilio(domicilio2)
+					.build();
+
+			clienteDomicilioRepository.save(clienteDomicilio2);
+
+			TelefonoCliente telefonoCliente2 = TelefonoCliente.builder()
+					.numero(5555555)
+					.cliente(cliente2)
+					.build();
+			telefonoClienteRepository.save(telefonoCliente2);
+
 			logger.info("----------------------creando Empleado----------------------------------");
 
 			Usuario usuarioEmpleado1 = Usuario.builder()
@@ -906,6 +947,71 @@ public class BuenSaborBackApplication {
 					.estado(entregado)
 					.build();
 			pedidoEstadoRepository.save(estadoInicial);
+
+
+			Pedido pedido2 = Pedido.builder()
+					.hora_estimada_finalizacion(LocalDate.of(2024, 5, 6).atStartOfDay().plusHours(1))
+					.fecha_pedido(LocalDate.now())
+					.clienteDomicilio(clienteDomicilio2)
+					.sucursal(sucursalGuaymallen)
+					.empleado(empleado1)
+					.formaPago(efectivo)
+					.tipoEnvio(deliveryEnvio)
+					.build();
+			pedidoRepository.save(pedido2);
+
+			DetallePedido detalle5 = DetallePedido.builder()
+					.cantidad(1)
+					.articulo(pizzaNapolitana)
+					.pedido(pedido2)
+					.build();
+			detallePedidoRepository.save(detalle5);
+
+			DetallePedido detalle6 = DetallePedido.builder()
+					.cantidad(5)
+					.articulo(hamburguesa)
+					.pedido(pedido2)
+					.build();
+			detallePedidoRepository.save(detalle6);
+
+			PedidoEstado estadoInicial2 = PedidoEstado.builder()
+					.fecha_hora(LocalDate.of(2024, 5, 6).atStartOfDay().plusHours(2))
+					.pedido(pedido2)
+					.estado(entregado)
+					.build();
+			pedidoEstadoRepository.save(estadoInicial2);
+
+			Pedido pedido3 = Pedido.builder()
+					.hora_estimada_finalizacion(LocalDate.of(2024, 5, 6).atStartOfDay().plusHours(1))
+					.fecha_pedido(LocalDate.of(2024, 5, 6))
+					.clienteDomicilio(clienteDomicilio)
+					.sucursal(sucursalGuaymallen)
+					.empleado(empleado1)
+					.formaPago(efectivo)
+					.tipoEnvio(deliveryEnvio)
+					.build();
+			pedidoRepository.save(pedido3);
+
+			DetallePedido detalle3 = DetallePedido.builder()
+					.cantidad(1)
+					.articulo(pizzaNapolitana)
+					.pedido(pedido3)
+					.build();
+			detallePedidoRepository.save(detalle3);
+
+			DetallePedido detalle4 = DetallePedido.builder()
+					.cantidad(5)
+					.articulo(hamburguesa)
+					.pedido(pedido3)
+					.build();
+			detallePedidoRepository.save(detalle4);
+
+			PedidoEstado estadoInicial3 = PedidoEstado.builder()
+					.fecha_hora(LocalDate.of(2024, 5, 6).atStartOfDay().plusHours(2))
+					.pedido(pedido2)
+					.estado(entregado)
+					.build();
+			pedidoEstadoRepository.save(estadoInicial3);
 		};
 	}
 }
