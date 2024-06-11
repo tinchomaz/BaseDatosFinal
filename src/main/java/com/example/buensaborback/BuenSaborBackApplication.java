@@ -30,42 +30,38 @@ public class BuenSaborBackApplication {
 	private DetallePromocionRepository detallePromocionRepository;
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-
 	@Autowired
 	private PaisRepository paisRepository;
-
 	@Autowired
 	private ProvinciaRepository provinciaRepository;
-
 	@Autowired
 	private LocalidadRepository localidadRepository;
-
 	@Autowired
 	private EmpresaRepository empresaRepository;
-
+	@Autowired
+	private ImagenEmpresaRepository imagenEmpresaRepository;
 	@Autowired
 	private SucursalRepository sucursalRepository;
-
+	@Autowired
+	private  ImagenSucursalRepository imagenSucursalRepository;
 	@Autowired
 	private SucursalInsumoRepository sucursalInsumoRepository;
-
 	@Autowired
 	private DomicilioRepository domicilioRepository;
-
 	@Autowired
 	private UnidadMedidaRepository unidadMedidaRepository;
-
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	@Autowired
 	private SubCategoriaRepository subCategoriaRepository;
-
 	@Autowired
 	private ArticuloInsumoRepository articuloInsumoRepository;
-
+	@Autowired
+	private HistorialPrecioInsumoRepository historialPrecioInsumoRepository;
 	@Autowired
 	private ArticuloManufacturadoRepository articuloManufacturadoRepository;
-
+	@Autowired
+	private HistorialPrecioManufacturadoRepository historialPrecioManufacturadoRepository;
 	@Autowired
 	private ImagenArticuloRepository imagenArticuloRepository;
 	@Autowired
@@ -76,6 +72,8 @@ public class BuenSaborBackApplication {
 	private TelefonoEmpleadoRepository telefonoEmpleadoRepository;
 	@Autowired
 	private PromocionRepository promocionRepository;
+	@Autowired
+	private ImagenPromocionRepository imagenPromocionRepository;
 	@Autowired
 	private PromocionSucursalRepository promocionSucursalRepository;
 	@Autowired
@@ -105,7 +103,7 @@ public class BuenSaborBackApplication {
 	CommandLineRunner init(ClienteRepository clienteRepository,
 						   ClienteDomicilioRepository clienteDomicilioRepository,
 						   DetallePromocionRepository detallePromocionRepository,
-						   UsuarioRepository usuarioClienteRepository,
+						   UsuarioRepository usuarioRepository,
 						   PaisRepository paisRepository,
 						   ProvinciaRepository provinciaRepository,
 						   LocalidadRepository localidadRepository,
@@ -117,9 +115,12 @@ public class BuenSaborBackApplication {
 						   CategoriaRepository categoriaRepository,
 						   SubCategoriaRepository subCategoriaRepository,
 						   ArticuloInsumoRepository articuloInsumoRepository,
+						   HistorialPrecioInsumoRepository historialPrecioInsumoRepository,
 						   ArticuloManufacturadoRepository articuloManufacturadoRepository,
+						   HistorialPrecioManufacturadoRepository historialPrecioManufacturadoRepository,
 						   ImagenArticuloRepository imagenArticuloRepository,
 						   PromocionRepository promocionRepository,
+						   ImagenPromocionRepository imagenPromocionRepository,
 						   PromocionSucursalRepository promocionSucursalRepository,
 						   DetalleManufacturadoRepository detalleManufacturadoRepository,
 						   PedidoRepository pedidoRepository,
@@ -134,7 +135,9 @@ public class BuenSaborBackApplication {
 						   FormaPagoRepository formaPagoRepository,
 						   StockInsumoRepository stockInsumoRepository,
 						   SucursalManufacturadoRepository sucursalManufacturadoRepository,
-						   HistorialEmpleadoSucursalRepository historialEmpleadoSucursalRepository) {
+						   HistorialEmpleadoSucursalRepository historialEmpleadoSucursalRepository,
+						   ImagenEmpresaRepository imagenEmpresaRepository,
+						   ImagenSucursalRepository imagenSucursalRepository) {
 		return args -> {
 			logger.info("----------------ESTOY----FUNCIONANDO---------------------");
 			// Etapa del dashboard
@@ -160,10 +163,25 @@ public class BuenSaborBackApplication {
 			localidadRepository.save(localidad3);
 			localidadRepository.save(localidad4);
 
+
 			// Crear 1 empresa, 2 sucursales para esa empresa y los Domicilios para esas sucursales
+			// Imagen de la empresa
+			ImagenEmpresa imagenEmpresaCarlos1 = ImagenEmpresa.builder()
+					.nombre("Carlos")
+					.url("https://superdepaso.com.ar/wp-content/uploads/2021/06/SANTAROSA-PATEGRAS-04.jpg")
+					.build();
+			imagenEmpresaRepository.save(imagenEmpresaCarlos1);
+			ImagenEmpresa imagenEmpresaCarlos2 = ImagenEmpresa.builder()
+					.nombre("Carlos2")
+					.url("https://superdepaso.com.ar/wp-content/uploads/2021/06/SANTAROSA-PATEGRAS-04.jpg")
+					.build();
+			imagenEmpresaRepository.save(imagenEmpresaCarlos2);
 
 			Empresa empresaCarlos = Empresa.builder().nombre("Lo de Carlos").cuit("30546780L").build();
+			empresaCarlos.getImagenEmpresas().add(imagenEmpresaCarlos1);
+			empresaCarlos.getImagenEmpresas().add(imagenEmpresaCarlos2);
 			empresaRepository.save(empresaCarlos);
+
 
 			Sucursal sucursalGuaymallen = Sucursal.builder()
 					.nombre("En Guaymallen")
@@ -187,6 +205,23 @@ public class BuenSaborBackApplication {
 			// GRABAMOS DOMICILIOS
 			domicilioRepository.save(domicilioBerutti);
 			domicilioRepository.save(domicilioGaboto);
+
+			//Imagen de las sucursales
+
+			ImagenSucursal imagenSucursalGuaymallen = ImagenSucursal.builder()
+					.nombre("Guaymallen")
+					.url("https://mandolina.co/wp-content/uploads/2023/03/648366622-1024x683.jpg")
+					.build();
+			imagenSucursalRepository.save(imagenSucursalGuaymallen);
+
+			ImagenSucursal imagenSucursalMarDelPlata = ImagenSucursal.builder()
+					.nombre("Mar del Plata")
+					.url("https://www.eltiempo.com.ar/sites/default/files/styles/fotos_1200x630/public/2020-09/mar-del-plata-1200x630.jpg?itok=6k6-1118")
+					.build();
+			imagenSucursalRepository.save(imagenSucursalMarDelPlata);
+
+			sucursalGuaymallen.getImagenesSucursal().add(imagenSucursalGuaymallen);
+			sucursalGuaymallen.getImagenesSucursal().add(imagenSucursalMarDelPlata);
 
 			//ASOCIAMOS LOS DOMICILIOS A SUCURSAL
 			sucursalGuaymallen.setDomicilio(domicilioBerutti);
@@ -227,11 +262,12 @@ public class BuenSaborBackApplication {
 			subCategoriaRepository.save(subCategoria2);
 
 			Categoria categoriaPizzas = Categoria.builder().denominacion("Pizzas").es_insumo(false).build();
-
+			Categoria categoriaHamburguesas = Categoria.builder().denominacion("Hamburguesas").es_insumo(false).build();
 			Categoria categoriaInsumos = Categoria.builder().denominacion("Insumos").es_insumo(true).build();
 
 			// Grabo la categoría de insumos y de Manufacturados
 			categoriaRepository.save(categoriaPizzas);
+			categoriaRepository.save(categoriaHamburguesas);
 			categoriaRepository.save(categoriaInsumos);
 
 			logger.info("---------------Crear Unidades de medida--------------------");
@@ -265,6 +301,7 @@ public class BuenSaborBackApplication {
 			// Crear Insumos
 
 			ArticuloInsumo cocaCola = ArticuloInsumo.builder()
+					.codigo("I12333")
 					.denominacion("Coca Cola 2.5L")
 					.es_para_elaborar(false)
 					.unidadMedida(unidadMedidaLitros)
@@ -273,6 +310,7 @@ public class BuenSaborBackApplication {
 			articuloInsumoRepository.save(cocaCola);
 
 			ArticuloInsumo pepsi = ArticuloInsumo.builder()
+					.codigo("I12345")
 					.denominacion("Pepsi 2.5L")
 					.es_para_elaborar(false)
 					.unidadMedida(unidadMedidaLitros)
@@ -326,6 +364,7 @@ public class BuenSaborBackApplication {
 			articuloInsumoRepository.save(fernet);
 
 			ArticuloInsumo menta = ArticuloInsumo.builder()
+					.codigo("I44444")
 					.denominacion("Menta con Hielo")
 					.es_para_elaborar(true)
 					.categoria(categoriaInsumos)
@@ -400,6 +439,65 @@ public class BuenSaborBackApplication {
 			sucursalGuaymallenInsumoMenta.setInsumo(menta);
 			sucursalInsumoRepository.save(sucursalGuaymallenInsumoMenta);
 
+			logger.info("---------------Asocio sucursalinsumo y sucursal--------------------");
+
+			HistorialPrecioInsumo historialPrecioInsumoCoca = HistorialPrecioInsumo.builder()
+					.precio_compra(10000f)
+					.fecha(LocalDate.now())
+					.sucursalInsumo(sucursalGuaymallenInsumoCoca)
+					.build();
+			historialPrecioInsumoRepository.save(historialPrecioInsumoCoca);
+
+
+            HistorialPrecioInsumo historialPrecioInsumoPepsi = HistorialPrecioInsumo.builder()
+					.precio_compra(1999f)
+					.fecha(LocalDate.now())
+					.sucursalInsumo(sucursalGuaymallenInsumoPepsi)
+					.build();
+			historialPrecioInsumoRepository.save(historialPrecioInsumoPepsi);
+
+			HistorialPrecioInsumo historialPrecioInsumoHarina = HistorialPrecioInsumo.builder()
+					.precio_compra(10000f)
+					.fecha(LocalDate.now())
+					.sucursalInsumo(sucursalGuaymallenInsumoHarina)
+					.build();
+			historialPrecioInsumoRepository.save(historialPrecioInsumoHarina);
+
+			HistorialPrecioInsumo historialPrecioInsumoJamon = HistorialPrecioInsumo.builder()
+					.precio_compra(10000f)
+					.fecha(LocalDate.now())
+					.sucursalInsumo(sucursalGuaymallenInsumoJamon)
+					.build();
+			historialPrecioInsumoRepository.save(historialPrecioInsumoJamon);
+
+			HistorialPrecioInsumo historialPrecioInsumoMorrones = HistorialPrecioInsumo.builder()
+					.precio_compra(10000f)
+					.fecha(LocalDate.now())
+					.sucursalInsumo(sucursalGuaymallenInsumoMorrones)
+					.build();
+			historialPrecioInsumoRepository.save(historialPrecioInsumoMorrones);
+
+            HistorialPrecioInsumo historialPrecioInsumoCerveza = HistorialPrecioInsumo.builder()
+					.precio_compra(10000f)
+					.fecha(LocalDate.now())
+					.sucursalInsumo(sucursalGuaymallenInsumoCerveza)
+					.build();
+			historialPrecioInsumoRepository.save(historialPrecioInsumoCerveza);
+
+			HistorialPrecioInsumo historialPrecioInsumoFernet = HistorialPrecioInsumo.builder()
+					.precio_compra(10000f)
+					.fecha(LocalDate.now())
+					.sucursalInsumo(sucursalGuaymallenInsumoFernet)
+					.build();
+			historialPrecioInsumoRepository.save(historialPrecioInsumoFernet);
+
+            HistorialPrecioInsumo historialPrecioInsumoMenta = HistorialPrecioInsumo.builder()
+					.precio_compra(10000f)
+					.fecha(LocalDate.now())
+					.sucursalInsumo(sucursalGuaymallenInsumoMenta)
+					.build();
+			historialPrecioInsumoRepository.save(historialPrecioInsumoMenta);
+
 			logger.info("---------------agregue stock insumos--------------------");
 
 			StockInsumo stockInsumoCoca = StockInsumo.builder()
@@ -458,25 +556,46 @@ public class BuenSaborBackApplication {
 					.build();
 			stockInsumoRepository.save(stockInsumoMenta);
 
+			logger.info("---------------agregue imagenes para manufacturado--------------------");
+
+			ImagenArticulo imagenPizzaNapolitana = ImagenArticulo.builder()
+					.nombre("pizza-napolitana")
+					.url("https://www.pizzanapolitana.com/wp-content/uploads/2019/09/Pizza-Napolitana-1.jpg")
+					.build();
+			imagenArticuloRepository.save(imagenPizzaNapolitana);
+
+			ImagenArticulo imagenHamburguesa = ImagenArticulo.builder()
+					.nombre("hamburguesa")
+					.url("https://cdn.shopify.com/s/files/1/0927/6845/products/Hamburguesa-1_1024x1024.jpg?v=1568777126")
+					.build();
+			imagenArticuloRepository.save(imagenHamburguesa);
+
+
 			logger.info("---------------agregue manufacturados a sucursales--------------------");
 
 			// Crear productos manufacturados
 			ArticuloManufacturado pizzaNapolitana = ArticuloManufacturado.builder()
+					.codigo("M12")
 					.denominacion("Pizza Napolitana")
 					.unidadMedida(unidadMedidaUnidad)
 					.descripcion("pizza rica de queso")
 					.preparacion("muzzarela en el horno 10 min")
 					.tiempo_estimado_preparacion("20 minutos")
+					.categoria(categoriaPizzas)
 					.build();
+			pizzaNapolitana.getImagenArticulo().add(imagenPizzaNapolitana);
 			articuloManufacturadoRepository.save(pizzaNapolitana);
 
 			ArticuloManufacturado hamburguesa = ArticuloManufacturado.builder()
+					.codigo("M13")
 					.denominacion("Hamburguesa completa")
 					.unidadMedida(unidadMedidaUnidad)
 					.descripcion("Hamburguesa con queso")
 					.preparacion("a la parrilla con condimentos")
 					.tiempo_estimado_preparacion("10 minutos")
+					.categoria(categoriaHamburguesas)
 					.build();
+			hamburguesa.getImagenArticulo().add(imagenHamburguesa);
 			articuloManufacturadoRepository.save(hamburguesa);
 
 			// Crear detalles de productos manufacturados
@@ -512,6 +631,22 @@ public class BuenSaborBackApplication {
 					.build();
 			sucursalManufacturadoRepository.save(sucursalGuaymallenManufacturadoHamburguesa);
 
+			logger.info("---------------agregue Historial Precio Manufacturado--------------------");
+
+
+			HistorialPrecioManufacturado historialPrecioManufacturadoPizzaNapolitana = HistorialPrecioManufacturado.builder()
+					.precio_costo(10000f)
+					.fecha(LocalDate.now())
+					.sucursalManufacturado(sucursalGuaymallenManufacturadoPizzaNapolitana)
+					.build();
+			historialPrecioManufacturadoRepository.save(historialPrecioManufacturadoPizzaNapolitana);
+
+            HistorialPrecioManufacturado historialPrecioManufacturadoHamburguesa = HistorialPrecioManufacturado.builder()
+					.precio_costo(15000f)
+					.fecha(LocalDate.now())
+					.sucursalManufacturado(sucursalGuaymallenManufacturadoHamburguesa)
+					.build();
+			historialPrecioManufacturadoRepository.save(historialPrecioManufacturadoHamburguesa);
 
 			logger.info("----------------------creando Roles----------------------------------");
 			Rol admin = Rol.builder()
@@ -644,12 +779,29 @@ public class BuenSaborBackApplication {
 					.build();
 			historialEmpleadoSucursalRepository.save(empleadoHistorialSucursal2);
 
+			logger.info("----------------------creando Imagen Promocion----------------------------------");
+
+			ImagenPromocion imagenPromocion1 = ImagenPromocion.builder()
+					.nombre("Promo 1")
+					.url("https://www.buensabor.com/wp-content/uploads/2020/04/hamburguesa-1.jpg")
+					.build();
+			imagenPromocionRepository.save(imagenPromocion1);
+
+			ImagenPromocion imagenPromocion2 = ImagenPromocion.builder()
+					.nombre("Promo 2")
+					.url("https://www.buensabor.com/wp-content/uploads/2020/04/hamburguesa-2.jpg")
+					.build();
+			imagenPromocionRepository.save(imagenPromocion2);
+
 			logger.info("----------------------creando Promocion----------------------------------");
 
 			Promocion promocionDescuentoBebidas = Promocion.builder()
 					.denominacion("Descuento en Bebidas")
 					.descripcion_descuento("Descuento del 20% en todas las bebidas")
 					.build();
+			promocionDescuentoBebidas.getImagenPromocion().add(imagenPromocion1);
+			promocionDescuentoBebidas.getImagenPromocion().add(imagenPromocion2);
+
 			promocionRepository.save(promocionDescuentoBebidas);
 
 			PromocionSucursal promocionSucursal = PromocionSucursal.builder()

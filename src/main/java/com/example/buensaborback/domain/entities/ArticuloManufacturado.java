@@ -18,10 +18,6 @@ public class ArticuloManufacturado extends Articulo{
     private String preparacion;
 
     @ManyToOne
-    @JoinColumn(name = "FK_id_categoria")
-    private Categoria categoria;
-
-    @ManyToOne
     @JoinColumn(name = "FK_id_unidad_medida")
     private UnidadMedida unidadMedida;
 

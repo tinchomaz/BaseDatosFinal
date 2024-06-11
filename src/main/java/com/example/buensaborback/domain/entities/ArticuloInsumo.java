@@ -16,10 +16,6 @@ public class ArticuloInsumo extends Articulo{
     private Boolean es_para_elaborar;
 
     @ManyToOne
-    @JoinColumn(name = "FK_id_categoria")
-    private Categoria categoria;
-
-    @ManyToOne
     @JoinColumn(name = "FK_id_unidad_medida")
     private UnidadMedida unidadMedida;
 

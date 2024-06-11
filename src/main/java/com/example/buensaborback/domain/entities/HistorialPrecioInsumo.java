@@ -21,7 +21,5 @@ public class HistorialPrecioInsumo extends Base{
     @ManyToOne
     @JoinColumn(name = "FK_id_sucursal_insumo")
     private SucursalInsumo sucursalInsumo;
-
-    // Getters and Setters
 }
 

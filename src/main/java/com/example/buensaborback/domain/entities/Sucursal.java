@@ -32,6 +32,6 @@ public class Sucursal extends Base{
 
     @OneToMany
     @Builder.Default
-    @JoinColumn(name = "id_articulo")
+    @JoinColumn(name = "id_sucursal")
     private Set<ImagenSucursal> imagenesSucursal = new HashSet<ImagenSucursal>();
 }

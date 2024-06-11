@@ -19,10 +19,6 @@ public class Empresa extends Base{
     private String nombre;
     private String cuit;
 
-    @OneToMany
-    @Builder.Default
-    private Set<ImagenEmpresa> imagenes = new HashSet<>();
-
     @OneToMany(mappedBy = "empresa")
     @Builder.Default
     private Set<Sucursal> sucursales = new HashSet<>();
