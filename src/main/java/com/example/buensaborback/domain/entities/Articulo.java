@@ -21,10 +21,10 @@ public class Articulo extends Base{
     private String codigo;
 
     @ManyToOne
-    @JoinColumn(name = "FK_id_categoria")
+    @JoinColumn(name = "fk_id_categoria")
     private Categoria categoria;
 
-    @OneToMany
+    @OneToMany (cascade= CascadeType.ALL)
     @Builder.Default
     @JoinColumn(name = "id_articulo")
     private Set<ImagenArticulo> imagenArticulo = new HashSet<ImagenArticulo>();

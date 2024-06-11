@@ -562,13 +562,13 @@ public class BuenSaborBackApplication {
 					.nombre("pizza-napolitana")
 					.url("https://www.pizzanapolitana.com/wp-content/uploads/2019/09/Pizza-Napolitana-1.jpg")
 					.build();
-			imagenArticuloRepository.save(imagenPizzaNapolitana);
+		//	imagenArticuloRepository.save(imagenPizzaNapolitana);
 
 			ImagenArticulo imagenHamburguesa = ImagenArticulo.builder()
 					.nombre("hamburguesa")
 					.url("https://cdn.shopify.com/s/files/1/0927/6845/products/Hamburguesa-1_1024x1024.jpg?v=1568777126")
 					.build();
-			imagenArticuloRepository.save(imagenHamburguesa);
+			//imagenArticuloRepository.save(imagenHamburguesa);
 
 
 			logger.info("---------------agregue manufacturados a sucursales--------------------");

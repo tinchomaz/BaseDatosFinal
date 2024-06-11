@@ -1,7 +1,7 @@
 package com.example.buensaborback.services.Impl;
 
 import com.example.buensaborback.domain.entities.ArticuloInsumo;
-import com.example.buensaborback.domain.entities.dto.ArticuloInsumoDto;
+import com.example.buensaborback.domain.dto.ArticuloInsumoDto;
 import com.example.buensaborback.repositories.ArticuloInsumoRepository;
 import com.example.buensaborback.services.ArticuloInsumoService;
 import com.example.buensaborback.services.Base.BaseServiceImp;
